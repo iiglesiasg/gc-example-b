@@ -1,3 +1,5 @@
 micronaut:
     application:
         name: gc-example-b
+    server:
+        port: 9002
