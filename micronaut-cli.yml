@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: gc.example.b
+---
+testFramework: junit
+sourceLanguage: java
