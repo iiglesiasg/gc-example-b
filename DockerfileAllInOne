@@ -1,17 +1,17 @@
 FROM gradle:jdk8 as builder
-COPY --chown=gradle:gradle . /home/gradle/gc-example-c
-WORKDIR /home/gradle/gc-example-c
+COPY --chown=gradle:gradle . /home/inigo/grupo-conocimiento/gc-example-b
+WORKDIR /home/inigo/grupo-conocimiento/gc-example-b
 RUN ./gradlew build
 
 FROM oracle/graalvm-ce:1.0.0-rc8 as graalvm
-COPY --from=builder /home/gradle/gc-example-c/ /home/gradle/gc-example-c/
-WORKDIR /home/gradle/gc-example-c
+COPY --from=builder /home/inigo/grupo-conocimiento/gc-example-b/ /home/inigo/grupo-conocimiento/gc-example-b/
+WORKDIR /home/inigo/grupo-conocimiento/gc-example-b
 RUN java -cp build/libs/*-all.jar \
             io.micronaut.graal.reflect.GraalClassLoadingAnalyzer \
             reflect.json
 RUN native-image --no-server \
-                 --class-path /home/gradle/gc-example-c/build/libs/*-all.jar \
-    			 -H:ReflectionConfigurationFiles=/home/gradle/gc-example-c/reflect.json \
+                 --class-path /home/inigo/grupo-conocimiento/gc-example-b/build/libs/*-all.jar \
+    			 -H:ReflectionConfigurationFiles=/home/inigo/grupo-conocimiento/gc-example-b/reflect.json \
     			 -H:EnableURLProtocols=http \
     			 -H:IncludeResources='logback.xml|application.yml|META-INF/services/*.*' \
     			 -H:+ReportUnsupportedElementsAtRuntime \
@@ -25,6 +25,6 @@ RUN native-image --no-server \
 
 FROM frolvlad/alpine-glibc
 EXPOSE 8080
-COPY --from=graalvm /home/gradle/gc-example-c/gc-example-c .
+COPY --from=graalvm /home/inigo/grupo-conocimiento/gc-example-b/gc-example-c .
 ENTRYPOINT ["./gc-example-c"]
 
