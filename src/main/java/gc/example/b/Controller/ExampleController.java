@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import io.reactivex.Flowable;
 
-@Controller("/colors")
+@Controller("/colorsb")
 public class ExampleController {
 
     private final ExampleProxy proxy;
