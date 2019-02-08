@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gc-example-b
+  namespace: grupo-conocimiento
+  labels:
+    app: gc-example-b
+spec:
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8080
+  selector:
+    app: gc-example-b
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gc-example-b
+  namespace: grupo-conocimiento
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gc-example-b
+        version: v1
+    spec:
+      containers:
+      - image: gcr.io/gke-inigo-1-229519/gc-example-b:1.0.0
+        imagePullPolicy: IfNotPresent
+        name: gc-example-b
+        ports:
+        - containerPort: 8080
