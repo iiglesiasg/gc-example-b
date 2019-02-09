@@ -1,3 +1,7 @@
 micronaut:
     application:
         name: gc-example-b
+
+endpoints:
+    health:
+        enabled: true
