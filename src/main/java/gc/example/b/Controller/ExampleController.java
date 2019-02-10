@@ -20,7 +20,8 @@ public class ExampleController {
 
     @Get("/")
     @Produces(MediaType.APPLICATION_JSON_STREAM)
-    public Flowable<Color> getColors() {
-        return proxy.getColors();
+    public Flowable<Colorb> getColors() {
+        return proxy.getColors()
+                .map(color -> new Colorb(color.getColor(),color.getDescription(),"Pasa por el servicio B"));
     }
 }
