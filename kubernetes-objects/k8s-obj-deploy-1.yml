@@ -1,0 +1,32 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gc-example-b-v2
+  namespace: grupo-conocimiento
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: gc-example-b
+        version: v2
+    spec:
+      containers:
+      - env:
+        - name: EXAMPLE_HOST_URL
+          value: http://gc-example-a:8000
+        image: gcr.io/gke-inigo-1-229519/gc-example-b:2.0.0
+        imagePullPolicy: IfNotPresent
+        name: gc-example-b
+        ports:
+        - containerPort: 8080	
+
