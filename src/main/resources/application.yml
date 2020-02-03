@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: simple-log-client
+  #server:
+  #  port: 9002
